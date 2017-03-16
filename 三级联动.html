@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>三级联动</title>
+		<script src="jquery-3.1.1.js"></script>
+	</head>
+	<body>
+		<button id="btn">选择城市</button>
+		<!--城市-->
+		<select name="" id="city"></select>
+		<!--地区-->
+		<select name="" id="region"></select>
+		<!--县区-->
+		<select name="" id="county"></select>
+		
+		
+		<script>
+		$('#btn').click(function()
+		{
+			$.ajax(
+				{
+					url:'Citys.json',
+					type:'get',
+					dateType:'json',
+					async:true,
+					success:function(data)
+					{
+						$.each(data,function(a,i)
+						{
+							//往select里追加一个option
+							$('#city').append('<option>'+i.name+'</option>');
+							$('#city').change(function()
+							{
+								//先删除元素
+								$('#county').children().remove();
+								$('#region').children().remove();
+								var $val=$(this).val();
+								$.each(data,function(n,m)
+								{
+									if($val == m.name)
+									{
+										$.each(m.sub,function(y,h)
+										{
+											$('#region').append('<option>'+ h.name+'</option>');
+										});
+									}
+								});
+								$('#region').change(function()
+								{
+									$('#county').children().remove();
+									var $val=$(this).val();
+									$.each(data,function(i,j)
+									{
+										$.each(j.sub,function(n,m)
+										{
+											if($val == m.name)
+											{
+												$.each(m.sub,function(y,h)
+												{
+													$('#county').append('<option>'+h.name+'</option>');
+												});
+											}
+										});
+									});
+								});
+							});
+						});
+					}
+				}
+			)
+		});
+			
+		</script>
+	</body>
+</html>
