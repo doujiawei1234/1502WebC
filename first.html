@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        button{
+            float: left;
+            border: 1px solid black;
+        }
+        div{
+            width: 300px;
+            height: 200px;
+            background: black;
+            display: none;
+            margin-top: 3px;
+        }
+        button{
+            height: 20px;
+            width: 75px;
+        }
+        button.btn{
+            color: red;
+        }
+        div.ku{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<button class="btn">1</button>
+<button>2</button>
+<button>3</button>
+<button>4</button>
+<div class="ku" style="background: yellow">1</div>
+<div style="background: red">2</div>
+<div style="background: blue">3</div>
+<div style="background: pink">4</div>
+</body>
+<script type="text/javascript">
+    var btn=document.getElementsByTagName("button");
+    var div=document.getElementsByTagName("div");
+    for(var i=0;i<btn.length;i++){
+        btn[i].index=i;
+        btn[i].onclick=function(){
+            for(var j=0;j<btn.length;j++){
+                btn[j].className="";
+            }
+            this.className="btn";
+            for(var a=0;a<div.length;a++){
+                div[a].className="";
+            }
+            div[this.index].className="ku";
+        }
+    }
+</script>
+</html>
